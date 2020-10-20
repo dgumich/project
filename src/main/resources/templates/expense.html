@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список затрат</title>
+</head>
+<body>
+<h1>Привет, Скрудж МакДак!</h1>
+<p> сейчас у тебя есть данные затраты</p>
+<tr th:each="expense : ${expenses}">
+    <td><span th:text="${expense.getComment()}"> Название траты </span></td>
+    <td><span th:text="${expense.getCategory().getName()}"> Название категории </span></td>
+    <td><span th:text="${expense.getSum()}"> Затраченная сумма </span></td>
+    <td><span th:text="${expense.getDate()}"> День затраты </span></td>
+    <td><a th:href="@{/expense/{id}(id=${expense.getId()})}"> Редактировать </a></td>
+    <br>
+</tr>
+
+<form th:action="@{/expense}" method="post">
+    <label>.
+        <input type="date" class="form_input" name="expenseDate" placeholder="День затраты">
+    </label>
+    <label>
+        <input type="number" class="form_input" name="sum" placeholder="Сумма">
+    </label>
+
+    <label>
+        <input type="text" class="text-input" name="comment" placeholder="Комментарий">
+    </label>
+
+    <label>Категория</label>
+        <select name="categoryName" type="text">
+            <option th:each="c : ${categories}" th:value="${c.getName()}" th:text="${c.getName()}"></option>
+        </select>
+
+
+    <button class="form_button" type="submit">Добавить расход</button>
+</form>
+
+
+</body>
+</html>

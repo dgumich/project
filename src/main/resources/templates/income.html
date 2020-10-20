@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список доходов</title>
+</head>
+<body>
+
+<h1>Привет, Буратино! Крекс, фекс, пекс - кажется, твое дерево на поле чудес выросло! </h1>
+<p> сейчас у тебя есть данные поступления</p>
+<tr th:each="income : ${incomes}">
+    <td><span th:text="${income.getComment()}"> Название траты </span></td>
+    <td><span th:text="${income.getCategory().getName()}"> Название категории </span></td>
+    <td><span th:text="${income.getSum()}"> Затраченная сумма </span></td>
+    <td><span th:text="${income.getDate()}"> День затраты </span></td>
+    <td><a th:href="@{/income/{id}(id=${income.getId()})}"> Редактировать </a></td>
+    <br>
+</tr>
+
+<form th:action="@{/income}" method="post">
+    <label>.
+        <input type="date" class="form_input" name="incomeDate" placeholder="День дохода">
+    </label>
+    <label>
+        <input type="number" class="form_input" name="sum" placeholder="Сумма">
+    </label>
+
+    <label>
+        <input type="text" class="text-input" name="comment" placeholder="Комментарий">
+    </label>
+
+    <label>Категория</label>
+    <select name="categoryName" type="text">
+        <option th:each="c : ${categories}" th:value="${c.getName()}" th:text="${c.getName()}"></option>
+    </select>
+
+
+    <button class="form_button" type="submit">Добавить расход</button>
+</form>
+
+</body>
+</html>
